@@ -1,7 +1,7 @@
 ---
 title: "Introduction to the Tidyverse"
 author: "Andi"
-date: "10 May, 2021"
+date: "11 May, 2021"
 output: 
   html_document: 
     keep_md: yes
@@ -257,5 +257,196 @@ ggplot(gapminder_1952, aes(x = pop, y = gdpPercap)) + geom_point() + scale_x_log
 ![](intrototidy_files/figure-html/unnamed-chunk-6-4.png)<!-- -->
 
 
+## Additional aesthetics
 
+
+```r
+# Scatter plot comparing pop and lifeExp, with color representing continent
+
+gapminder_1952 %>% ggplot(aes(x = pop, y = lifeExp, color = continent)) + geom_point() + scale_x_log10()
+```
+
+![](intrototidy_files/figure-html/unnamed-chunk-7-1.png)<!-- -->
+
+```r
+# Add the size aesthetic to represent a country's gdpPercap
+ggplot(gapminder_1952, aes(x = pop, y = lifeExp, color = continent, size = gdpPercap)) +
+  geom_point() +
+  scale_x_log10()
+```
+
+![](intrototidy_files/figure-html/unnamed-chunk-7-2.png)<!-- -->
+
+## Faceting
+
+
+```r
+# Scatter plot comparing pop and lifeExp, faceted by continent
+
+ggplot(gapminder_1952, aes(x = pop, y = lifeExp)) + geom_point() + scale_x_log10() + facet_wrap(~ continent)
+```
+
+![](intrototidy_files/figure-html/unnamed-chunk-8-1.png)<!-- -->
+
+```r
+# Scatter plot comparing gdpPercap and lifeExp, with color representing continent
+# and size representing population, faceted by year
+ggplot(gapminder, aes(x = gdpPercap, y = lifeExp, color = continent, size = pop)) + geom_point() + scale_x_log10() + facet_wrap(~ year) 
+```
+
+![](intrototidy_files/figure-html/unnamed-chunk-8-2.png)<!-- -->
+
+## The summarize verb
+
+
+```r
+# Summarize to find the median life expectancy
+gapminder %>% summarize(medianLifeExp = median(lifeExp))
+```
+
+```
+## # A tibble: 1 x 1
+##   medianLifeExp
+##           <dbl>
+## 1          60.7
+```
+
+```r
+# Filter for 1957 then summarize the median life expectancy
+gapminder %>% filter(year == "1957") %>% summarize(medianLifeExp = median(lifeExp))
+```
+
+```
+## # A tibble: 1 x 1
+##   medianLifeExp
+##           <dbl>
+## 1          48.4
+```
+
+```r
+# Filter for 1957 then summarize the median life expectancy and the maximum GDP per capita
+gapminder %>% filter(year == "1957") %>% summarize(medianLifeExp = median(lifeExp), maxGdpPercap = max(gdpPercap))
+```
+
+```
+## # A tibble: 1 x 2
+##   medianLifeExp maxGdpPercap
+##           <dbl>        <dbl>
+## 1          48.4      113523.
+```
+
+## The group_by verb
+
+
+```r
+# Find median life expectancy and maximum GDP per capita in each year
+gapminder %>% group_by(year) %>% summarize(medianLifeExp = median(lifeExp), maxGdpPercap = max(gdpPercap))
+```
+
+```
+## # A tibble: 12 x 3
+##     year medianLifeExp maxGdpPercap
+##    <int>         <dbl>        <dbl>
+##  1  1952          45.1      108382.
+##  2  1957          48.4      113523.
+##  3  1962          50.9       95458.
+##  4  1967          53.8       80895.
+##  5  1972          56.5      109348.
+##  6  1977          59.7       59265.
+##  7  1982          62.4       33693.
+##  8  1987          65.8       31541.
+##  9  1992          67.7       34933.
+## 10  1997          69.4       41283.
+## 11  2002          70.8       44684.
+## 12  2007          71.9       49357.
+```
+
+```r
+# Find median life expectancy and maximum GDP per capita in each continent in 1957
+gapminder %>% filter(year == '1957') %>% group_by(continent) %>% summarize(medianLifeExp = median(lifeExp), maxGdpPercap = max(gdpPercap))
+```
+
+```
+## # A tibble: 5 x 3
+##   continent medianLifeExp maxGdpPercap
+##   <fct>             <dbl>        <dbl>
+## 1 Africa             40.6        5487.
+## 2 Americas           56.1       14847.
+## 3 Asia               48.3      113523.
+## 4 Europe             67.6       17909.
+## 5 Oceania            70.3       12247.
+```
+
+```r
+# Find median life expectancy and maximum GDP per capita in each continent/year combination
+gapminder %>% group_by(year, continent) %>% summarize(medianLifeExp = median(lifeExp), maxGdpPercap = max(gdpPercap))
+```
+
+```
+## `summarise()` has grouped output by 'year'. You can override using the `.groups` argument.
+```
+
+```
+## # A tibble: 60 x 4
+## # Groups:   year [12]
+##     year continent medianLifeExp maxGdpPercap
+##    <int> <fct>             <dbl>        <dbl>
+##  1  1952 Africa             38.8        4725.
+##  2  1952 Americas           54.7       13990.
+##  3  1952 Asia               44.9      108382.
+##  4  1952 Europe             65.9       14734.
+##  5  1952 Oceania            69.3       10557.
+##  6  1957 Africa             40.6        5487.
+##  7  1957 Americas           56.1       14847.
+##  8  1957 Asia               48.3      113523.
+##  9  1957 Europe             67.6       17909.
+## 10  1957 Oceania            70.3       12247.
+## # ... with 50 more rows
+```
+
+## Visualizing summarized data
+
+
+```r
+by_year <- gapminder %>%
+  group_by(year) %>%
+  summarize(medianLifeExp = median(lifeExp),
+            maxGdpPercap = max(gdpPercap))
+
+# Create a scatter plot showing the change in medianLifeExp over time
+ggplot(by_year, aes(x = year, y = medianLifeExp)) + geom_point() + expand_limits(y = 0)
+```
+
+![](intrototidy_files/figure-html/unnamed-chunk-11-1.png)<!-- -->
+
+```r
+# Summarize medianGdpPercap within each continent within each year: by_year_continent
+by_year_continent = gapminder %>% group_by(continent, year) %>% summarize(medianGdpPercap = median(gdpPercap))
+```
+
+```
+## `summarise()` has grouped output by 'continent'. You can override using the `.groups` argument.
+```
+
+```r
+# Plot the change in medianGdpPercap in each continent over time
+ggplot(by_year_continent, aes(x = year, y = medianGdpPercap, color = continent)) + geom_point() + expand_limits(y = 0)
+```
+
+![](intrototidy_files/figure-html/unnamed-chunk-11-2.png)<!-- -->
+
+```r
+# Summarize the median GDP and median life expectancy per continent in 2007
+by_continent_2007 <- gapminder %>%
+  filter(year == 2007) %>%
+  group_by(continent) %>%
+  summarize(medianGdpPercap = median(gdpPercap),
+            medianLifeExp = median(lifeExp))
+
+# Use a scatter plot to compare the median GDP and median life expectancy
+ggplot(by_continent_2007, aes(x = medianGdpPercap, y = medianLifeExp, color = continent)) +
+  geom_point()
+```
+
+![](intrototidy_files/figure-html/unnamed-chunk-11-3.png)<!-- -->
 
