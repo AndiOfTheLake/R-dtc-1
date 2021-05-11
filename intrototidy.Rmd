@@ -1,7 +1,7 @@
 ---
 title: "Introduction to the Tidyverse"
 author: "Andi"
-date: "5/10/2021"
+date: "`r format(Sys.time(), '%d %B, %Y')`"
 output: 
   html_document: 
     keep_md: yes
@@ -9,25 +9,52 @@ output:
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
-library(tidyverse)
 ```
 
-## R Markdown
-
-This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
-
-When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:
-
-```{r cars}
-summary(cars)
+```{r,results='hide'}
+# if we used both 'echo=True' and 'results=hide' the pipe would not work properly
+library(gapminder)
+library(dplyr)
 ```
 
-## Including Plots
+## Filter verbe
 
-You can also embed plots, for example:
-
-```{r pressure, echo=FALSE}
-plot(pressure)
+```{r}
+# Filter the gapminder dataset for the year 1957
+gapminder %>% filter(year == "1957")
+gapminder %>% filter(country == "China", year == '2002')
 ```
 
-Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
+## Arrange verbe
+
+```{r}
+# Arranging observations by life expectancy
+
+# Sort in ascending order of lifeExp
+gapminder %>% arrange(lifeExp)
+  
+# Sort in descending order of lifeExp
+gapminder %>% arrange(desc(lifeExp))
+
+# Filter for the year 1957, then arrange in descending order of population
+gapminder %>% filter(year == "1957") %>% arrange(desc(pop))
+
+```
+
+## The mutate verbe
+
+```{r}
+# Using mutate to change or create a column
+
+# Use mutate to change lifeExp to be in months
+gapminder %>% mutate(lifeExp = lifeExp * 12)
+
+# Use mutate to create a new column called lifeExpMonths
+gapminder %>% mutate(lifeExpMonths = 12 * lifeExp)
+
+# Combining filter, mutate, and arrange
+# Filter, mutate, and arrange the gapminder dataset
+gapminder %>% filter(year == "2007") %>% mutate(lifeExpMonths = 12 * lifeExp) %>% arrange(desc(lifeExpMonths))
+
+```
+
