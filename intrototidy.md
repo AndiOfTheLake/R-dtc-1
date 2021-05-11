@@ -212,3 +212,50 @@ gapminder %>% filter(year == "2007") %>% mutate(lifeExpMonths = 12 * lifeExp) %>
 ## # ... with 132 more rows
 ```
 
+## ggplot2
+
+
+```r
+library(ggplot2)
+```
+
+
+
+```r
+gapminder_1952 <- gapminder %>%
+  filter(year == 1952)
+
+# Change to put pop on the x-axis and gdpPercap on the y-axis
+ggplot(gapminder_1952, aes(x = pop, y = gdpPercap)) +
+  geom_point()
+```
+
+![](intrototidy_files/figure-html/unnamed-chunk-6-1.png)<!-- -->
+
+```r
+# Create a scatter plot with pop on the x-axis and lifeExp on the y-axis
+ggplot(gapminder_1952, aes(x = pop, y = lifeExp)) + geom_point()
+```
+
+![](intrototidy_files/figure-html/unnamed-chunk-6-2.png)<!-- -->
+
+```r
+# log scale
+
+# Change this plot to put the x-axis on a log scale
+ggplot(gapminder_1952, aes(x = pop, y = lifeExp)) +
+  geom_point() + scale_x_log10()
+```
+
+![](intrototidy_files/figure-html/unnamed-chunk-6-3.png)<!-- -->
+
+```r
+# # Scatter plot comparing pop and gdpPercap, with both axes on a log scale
+ggplot(gapminder_1952, aes(x = pop, y = gdpPercap)) + geom_point() + scale_x_log10() + scale_y_log10()
+```
+
+![](intrototidy_files/figure-html/unnamed-chunk-6-4.png)<!-- -->
+
+
+
+
