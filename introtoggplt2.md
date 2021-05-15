@@ -192,3 +192,11 @@ plt_price_vs_carat_by_clarity
 
 ![](introtoggplt2_files/figure-html/unnamed-chunk-7-3.png)<!-- -->
 
+```r
+# Which I believe gives the very same plot as the following line of code
+
+ggplot(diamonds, aes(carat, price, color = clarity)) + geom_point()
+```
+
+![](introtoggplt2_files/figure-html/unnamed-chunk-7-4.png)<!-- -->
+

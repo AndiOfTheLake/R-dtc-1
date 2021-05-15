@@ -16,6 +16,7 @@ knitr::opts_chunk$set(echo = TRUE)
 # if we used 'echo = FALSE' and 'results=hide' we would have only messages (i.e. attaching package) If we don't want them we set 'error = FALSE', 'warning = FALSE', and 'message = FALSE'.
 library(dplyr)
 library(ggplot2)
+library(gridExtra) # display plots side by side
 ```
 
 ## Drawing your first plot
@@ -95,6 +96,7 @@ plt_price_vs_carat_transparent <- plt_price_vs_carat + geom_point(alpha = 0.2)
 # See the plot
 plt_price_vs_carat_transparent
 
+
 # From previous step
 plt_price_vs_carat <- ggplot(diamonds, aes(carat, price))
 
@@ -104,5 +106,11 @@ plt_price_vs_carat_by_clarity <- plt_price_vs_carat + geom_point(aes(color = cla
 
 # See the plot
 plt_price_vs_carat_by_clarity
+
+# Which I believe gives the very same plot as the following line of code
+tmp <- ggplot(diamonds, aes(carat, price, color = clarity)) + geom_point()
+
+grid.arrange(plt_price_vs_carat_by_clarity, tmp, ncol = 2)
+
 ```
 
