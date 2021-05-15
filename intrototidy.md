@@ -1,7 +1,7 @@
 ---
 title: "Introduction to the Tidyverse"
 author: "Andi"
-date: "11 May, 2021"
+Last updated: "15 May, 2021"
 output: 
   html_document: 
     keep_md: yes
@@ -9,12 +9,6 @@ output:
 
 
 
-
-```r
-# if we used both 'echo=True' and 'results=hide' the pipe would not work properly
-library(gapminder)
-library(dplyr)
-```
 
 ```
 ## 
