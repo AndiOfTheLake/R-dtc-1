@@ -101,3 +101,15 @@ ggplot(mtcars, aes(wt, mpg, size = disp)) +
 
 ![](introtoggplt2_files/figure-html/unnamed-chunk-4-2.png)<!-- -->
 
+## ggplot2 layers
+
+
+```r
+load('diamonds.RData') # load R workspace
+
+# Add geom_point() with +
+ggplot(diamonds, aes(carat, price)) + geom_point()
+```
+
+![](introtoggplt2_files/figure-html/unnamed-chunk-5-1.png)<!-- -->
+

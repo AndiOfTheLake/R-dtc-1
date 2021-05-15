@@ -59,5 +59,9 @@ load('diamonds.RData') # load R workspace
 
 # Add geom_point() with +
 ggplot(diamonds, aes(carat, price)) + geom_point()
+
+# Add geom_smooth() with +
+ggplot(diamonds, aes(carat, price)) +
+  geom_point() + geom_smooth()
 ```
 
