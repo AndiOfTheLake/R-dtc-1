@@ -113,3 +113,82 @@ ggplot(diamonds, aes(carat, price)) + geom_point()
 
 ![](introtoggplt2_files/figure-html/unnamed-chunk-5-1.png)<!-- -->
 
+```r
+# Add geom_smooth() with +
+ggplot(diamonds, aes(carat, price)) +
+  geom_point() + geom_smooth()
+```
+
+```
+## `geom_smooth()` using method = 'gam' and formula 'y ~ s(x, bs = "cs")'
+```
+
+![](introtoggplt2_files/figure-html/unnamed-chunk-5-2.png)<!-- -->
+
+## Changing one geom or every geom
+
+
+```r
+# Map the color aesthetic to clarity
+ggplot(diamonds, aes(carat, price, color = clarity)) +
+  geom_point() +
+  geom_smooth()
+```
+
+```
+## `geom_smooth()` using method = 'loess' and formula 'y ~ x'
+```
+
+![](introtoggplt2_files/figure-html/unnamed-chunk-6-1.png)<!-- -->
+
+```r
+# Make the points 40% opaque
+ggplot(diamonds, aes(carat, price, color = clarity)) +
+  geom_point(alpha = 0.4) +
+  geom_smooth()
+```
+
+```
+## `geom_smooth()` using method = 'loess' and formula 'y ~ x'
+```
+
+![](introtoggplt2_files/figure-html/unnamed-chunk-6-2.png)<!-- -->
+
+## Saving plots as variables
+
+
+```r
+# Draw a ggplot
+plt_price_vs_carat <- ggplot(diamonds, aes(carat, price)) + geom_point()
+plt_price_vs_carat
+```
+
+![](introtoggplt2_files/figure-html/unnamed-chunk-7-1.png)<!-- -->
+
+```r
+# From previous step
+plt_price_vs_carat <- ggplot(diamonds, aes(carat, price))
+
+# Edit this to make points 20% opaque: plt_price_vs_carat_transparent
+plt_price_vs_carat_transparent <- plt_price_vs_carat + geom_point(alpha = 0.2)
+
+# See the plot
+plt_price_vs_carat_transparent
+```
+
+![](introtoggplt2_files/figure-html/unnamed-chunk-7-2.png)<!-- -->
+
+```r
+# From previous step
+plt_price_vs_carat <- ggplot(diamonds, aes(carat, price))
+
+# Edit this to map color to clarity,
+# Assign the updated plot to a new object
+plt_price_vs_carat_by_clarity <- plt_price_vs_carat + geom_point(aes(color = clarity))
+
+# See the plot
+plt_price_vs_carat_by_clarity
+```
+
+![](introtoggplt2_files/figure-html/unnamed-chunk-7-3.png)<!-- -->
+
