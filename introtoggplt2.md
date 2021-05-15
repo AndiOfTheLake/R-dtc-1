@@ -35,6 +35,18 @@ library(dplyr)
 
 ```r
 library(ggplot2)
+library(gridExtra) # display plots side by side
+```
+
+```
+## 
+## Attaching package: 'gridExtra'
+```
+
+```
+## The following object is masked from 'package:dplyr':
+## 
+##     combine
 ```
 
 ## Drawing your first plot
@@ -194,8 +206,9 @@ plt_price_vs_carat_by_clarity
 
 ```r
 # Which I believe gives the very same plot as the following line of code
+tmp <- ggplot(diamonds, aes(carat, price, color = clarity)) + geom_point()
 
-ggplot(diamonds, aes(carat, price, color = clarity)) + geom_point()
+grid.arrange(plt_price_vs_carat_by_clarity, tmp, ncol = 2)
 ```
 
 ![](introtoggplt2_files/figure-html/unnamed-chunk-7-4.png)<!-- -->
