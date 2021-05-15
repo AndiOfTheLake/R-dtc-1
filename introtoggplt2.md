@@ -71,5 +71,33 @@ ggplot(mtcars, aes(cyl, mpg)) +
 
 ![](introtoggplt2_files/figure-html/unnamed-chunk-2-1.png)<!-- -->
 
+## Data columns types affect plot types
 
+
+```r
+# Change the command below so that cyl is treated as factor
+ggplot(mtcars, aes(factor(cyl), mpg)) +
+  geom_point()
+```
+
+![](introtoggplt2_files/figure-html/unnamed-chunk-3-1.png)<!-- -->
+
+## The grammar of graphics
+
+
+```r
+# Edit to add a color aesthetic mapped to disp
+ggplot(mtcars, aes(wt, mpg, color = disp)) +
+  geom_point()
+```
+
+![](introtoggplt2_files/figure-html/unnamed-chunk-4-1.png)<!-- -->
+
+```r
+# Change the color aesthetic to a size aesthetic
+ggplot(mtcars, aes(wt, mpg, size = disp)) +
+  geom_point()
+```
+
+![](introtoggplt2_files/figure-html/unnamed-chunk-4-2.png)<!-- -->
 

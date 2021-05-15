@@ -17,3 +17,47 @@ knitr::opts_chunk$set(echo = TRUE)
 library(dplyr)
 library(ggplot2)
 ```
+
+## Drawing your first plot
+
+```{r}
+# Load the ggplot2 package
+library(ggplot2)
+
+# Explore the mtcars data frame with str()
+str(mtcars)
+
+# Execute the following command
+ggplot(mtcars, aes(cyl, mpg)) +
+  geom_point()
+```
+
+## Data columns types affect plot types
+
+```{r}
+# Change the command below so that cyl is treated as factor
+ggplot(mtcars, aes(factor(cyl), mpg)) +
+  geom_point()
+```
+
+## The grammar of graphics
+
+```{r}
+# Edit to add a color aesthetic mapped to disp
+ggplot(mtcars, aes(wt, mpg, color = disp)) +
+  geom_point()
+
+# Change the color aesthetic to a size aesthetic
+ggplot(mtcars, aes(wt, mpg, size = disp)) +
+  geom_point()
+```
+
+## ggplot2 layers
+
+```{r}
+load('diamonds.RData') # load R workspace
+
+# Add geom_point() with +
+ggplot(diamonds, aes(carat, price)) + geom_point()
+```
+
