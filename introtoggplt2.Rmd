@@ -277,6 +277,9 @@ ggplot(mtcars, aes(mpg, 0)) +
   ylim(c(-2, 2))
 ```
 
+## Scatter plots
+
+
 
 
 

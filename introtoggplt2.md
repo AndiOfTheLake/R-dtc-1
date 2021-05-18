@@ -502,6 +502,7 @@ ggplot(mtcars, aes(fcyl, fill = fam)) +
 
 ## Setting a dummy aesthetic
 
+We need it when we want univariate plots.
 
 ```r
 # Plot 0 vs. mpg
@@ -511,4 +512,17 @@ ggplot(mtcars, aes(mpg, 0)) +
 ```
 
 ![](introtoggplt2_files/figure-html/unnamed-chunk-15-1.png)<!-- -->
+
+```r
+ggplot(mtcars, aes(mpg, 0)) +
+  geom_jitter() +
+  # Set the y-axis limits
+  ylim(c(-2, 2))
+```
+
+![](introtoggplt2_files/figure-html/unnamed-chunk-15-2.png)<!-- -->
+
+
+
+
 
