@@ -114,3 +114,43 @@ grid.arrange(plt_price_vs_carat_by_clarity, tmp, ncol = 2)
 
 ```
 
+## All about aesthetics: color, shape and size
+
+```{r}
+mtcars$fcyl <- factor(mtcars$cyl) # cyl transformed into a factor
+
+# Map x to mpg and y to fcyl
+ggplot(mtcars, aes(mpg, fcyl)) +
+  geom_point()
+
+# Swap mpg and fcyl
+ggplot(mtcars, aes(fcyl, mpg)) +
+  geom_point()
+
+# Map x to wt, y to mpg and color to fcyl
+ggplot(mtcars, aes(wt, mpg, color = fcyl)) +
+  geom_point()
+
+ggplot(mtcars, aes(wt, mpg, color = fcyl)) +
+  # Set the shape and size of the points
+  geom_point(shape = 1, size = 4)
+```
+
+## All about aesthetics: color vs. fill
+
+```{r}
+# Map fcyl to fill
+ggplot(mtcars, aes(wt, mpg, fill = fcyl)) +
+  geom_point(shape = 1, size = 4)
+
+ggplot(mtcars, aes(wt, mpg, fill = fcyl)) +
+  # Change point shape; set alpha
+  geom_point(shape = 21, size = 4, alpha = 0.6)
+
+# Map color to fam
+ggplot(mtcars, aes(wt, mpg, fill = fcyl, color = fam)) +
+  geom_point(shape = 21, size = 4, alpha = 0.6)
+```
+
+Shapely coding! Notice that mapping a categorical variable onto fill doesn't change the colors, although a legend is generated! This is because the default shape for points only has a color attribute and not a fill attribute! Use fill when you have another shape (such as a bar), or when using a point that does have a fill and a color attribute, such as `shape = 21`, which is a circle with an outline. Any time you use a solid color, make sure to use alpha blending to account for over plotting.
+

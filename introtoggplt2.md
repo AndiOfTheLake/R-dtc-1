@@ -1,7 +1,7 @@
 ---
 title: "Introduction to Data Visualization with ggplot2"
 author: "Andi"
-Last updated: "15 May, 2021"
+Last updated: "18 May, 2021"
 output: 
   html_document: 
     keep_md: yes
@@ -212,4 +212,41 @@ grid.arrange(plt_price_vs_carat_by_clarity, tmp, ncol = 2)
 ```
 
 ![](introtoggplt2_files/figure-html/unnamed-chunk-7-4.png)<!-- -->
+
+## All about aesthetics: color, shape and size
+
+
+```r
+mtcars$fcyl <- factor(mtcars$cyl) # cyl transformed into a factor
+
+# Map x to mpg and y to fcyl
+ggplot(mtcars, aes(mpg, fcyl)) +
+  geom_point()
+```
+
+![](introtoggplt2_files/figure-html/unnamed-chunk-8-1.png)<!-- -->
+
+```r
+# Swap mpg and fcyl
+ggplot(mtcars, aes(fcyl, mpg)) +
+  geom_point()
+```
+
+![](introtoggplt2_files/figure-html/unnamed-chunk-8-2.png)<!-- -->
+
+```r
+# Map x to wt, y to mpg and color to fcyl
+ggplot(mtcars, aes(wt, mpg, color = fcyl)) +
+  geom_point()
+```
+
+![](introtoggplt2_files/figure-html/unnamed-chunk-8-3.png)<!-- -->
+
+```r
+ggplot(mtcars, aes(wt, mpg, color = fcyl)) +
+  # Set the shape and size of the points
+  geom_point(shape = 1, size = 4)
+```
+
+![](introtoggplt2_files/figure-html/unnamed-chunk-8-4.png)<!-- -->
 

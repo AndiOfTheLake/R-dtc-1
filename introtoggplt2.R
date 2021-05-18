@@ -34,3 +34,5 @@ plt_price_vs_carat_by_clarity
 grid.arrange(plt_price_vs_carat_by_clarity, 
              plt_price_vs_carat_transparent,
              ncol = 2)
+head(mtcars)
+mtcars$fcyl <- factor(mtcars$cyl)
