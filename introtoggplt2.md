@@ -1,7 +1,7 @@
 ---
 title: "Introduction to Data Visualization with ggplot2"
 author: "Andi"
-Last updated: "18 May, 2021"
+Last updated: "19 May, 2021"
 output: 
   html_document: 
     keep_md: yes
@@ -521,6 +521,57 @@ ggplot(mtcars, aes(mpg, 0)) +
 ```
 
 ![](introtoggplt2_files/figure-html/unnamed-chunk-15-2.png)<!-- -->
+
+## Scatter plots
+
+## Overplotting 1: large datasets
+
+
+```r
+load("diamonds.RData")
+
+# Plot price vs. carat, colored by clarity
+plt_price_vs_carat_by_clarity <- ggplot(diamonds, aes(carat, price, color = clarity))
+
+# Add a point layer with tiny points
+plt_price_vs_carat_by_clarity + geom_point(alpha = 0.5, shape = ".")
+```
+
+![](introtoggplt2_files/figure-html/unnamed-chunk-16-1.png)<!-- -->
+
+```r
+# Update the point shape to remove the line outlines by setting shape to 16
+plt_price_vs_carat_by_clarity + geom_point(alpha = 0.5, shape = 16)
+```
+
+![](introtoggplt2_files/figure-html/unnamed-chunk-16-2.png)<!-- -->
+
+## Overplotting 2: Aligned values
+
+
+```r
+# Plot base
+plt_mpg_vs_fcyl_by_fam <- ggplot(mtcars, aes(fcyl, mpg, color = fam))
+
+# Default points are shown for comparison
+plt_mpg_vs_fcyl_by_fam + geom_point()
+```
+
+![](introtoggplt2_files/figure-html/unnamed-chunk-17-1.png)<!-- -->
+
+```r
+# Alter the point positions by jittering, width 0.3
+plt_mpg_vs_fcyl_by_fam + geom_point(position = position_jitter(width = 0.3))
+```
+
+![](introtoggplt2_files/figure-html/unnamed-chunk-17-2.png)<!-- -->
+
+```r
+# Now jitter and dodge the point positions
+plt_mpg_vs_fcyl_by_fam + geom_point(position = position_jitterdodge(jitter.width = 0.3, dodge.width = 0.3))
+```
+
+![](introtoggplt2_files/figure-html/unnamed-chunk-17-3.png)<!-- -->
 
 
 

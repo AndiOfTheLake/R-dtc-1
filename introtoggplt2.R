@@ -36,3 +36,6 @@ grid.arrange(plt_price_vs_carat_by_clarity,
              ncol = 2)
 head(mtcars)
 mtcars$fcyl <- factor(mtcars$cyl)
+
+
+load("diamonds.RData")
