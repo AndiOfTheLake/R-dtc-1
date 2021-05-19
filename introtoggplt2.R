@@ -39,3 +39,5 @@ mtcars$fcyl <- factor(mtcars$cyl)
 
 
 load("diamonds.RData")
+library(car)
+head(Vocab)

@@ -310,7 +310,57 @@ plt_mpg_vs_fcyl_by_fam + geom_point(position = position_jitter(width = 0.3))
 plt_mpg_vs_fcyl_by_fam + geom_point(position = position_jitterdodge(jitter.width = 0.3, dodge.width = 0.3))
 ```
 
+## Overplotting 3: Low-precision data
 
+```{r}
+ggplot(iris, aes(Sepal.Length, Sepal.Width, color = Species)) +
+  # Swap for jitter layer with width 0.1
+  geom_jitter(alpha = 0.5, width = 0.1)
+```
 
+Now we use a different approach:
 
+Within `geom_point()`, set `position` to `"jitter"`.
+
+```{r}
+ggplot(iris, aes(Sepal.Length, Sepal.Width, color = Species)) +
+  # Set the position to jitter
+  geom_point(position = "jitter", alpha = 0.5)
+```
+
+Provide an alternative specification:
+
+Have the `position` argument call `position_jitter()` with a `width` of `0.1`.
+
+```{r}
+ggplot(iris, aes(Sepal.Length, Sepal.Width, color = Species)) +
+  # Use a jitter position function with width 0.1
+  geom_point(alpha = 0.5, position = position_jitter(width = 0.1))
+```
+
+## Overplotting 4: Integer data
+
+```{r}
+library(car) # to load Vocab data set
+
+# Examine the structure of Vocab
+str(Vocab)
+
+# Plot vocabulary vs. education
+ggplot(Vocab, aes(x = education, y = vocabulary)) +
+  # Add a point layer
+ geom_point()
+
+ggplot(Vocab, aes(education, vocabulary)) +
+  # Change to a jitter layer
+  geom_jitter()
+
+ggplot(Vocab, aes(education, vocabulary)) +
+  # Set the transparency to 0.2
+  geom_jitter(alpha = 0.2)
+
+ggplot(Vocab, aes(education, vocabulary)) +
+  # Set the shape to 1
+  geom_jitter(alpha = 0.2, shape = 1)
+```
 

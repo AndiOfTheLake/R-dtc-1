@@ -573,7 +573,28 @@ plt_mpg_vs_fcyl_by_fam + geom_point(position = position_jitterdodge(jitter.width
 
 ![](introtoggplt2_files/figure-html/unnamed-chunk-17-3.png)<!-- -->
 
+## Overplotting 3: Low-precision data
 
 
+```r
+ggplot(iris, aes(Sepal.Length, Sepal.Width, color = Species)) +
+  # Swap for jitter layer with width 0.1
+  geom_jitter(alpha = 0.5, width = 0.1)
+```
+
+![](introtoggplt2_files/figure-html/unnamed-chunk-18-1.png)<!-- -->
+
+Now we use a different approach:
+
+Within `geom_point()`, set `position` to `"jitter"`.
+
+
+```r
+ggplot(iris, aes(Sepal.Length, Sepal.Width, color = Species)) +
+  # Set the position to jitter
+  geom_point(position = "jitter", alpha = 0.5)
+```
+
+![](introtoggplt2_files/figure-html/unnamed-chunk-19-1.png)<!-- -->
 
 
