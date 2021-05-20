@@ -909,3 +909,81 @@ ggplot(fish.tidy, aes(x = Year, y = Capture, color = Species)) +
 
 ![](introtoggplt2_files/figure-html/unnamed-chunk-27-4.png)<!-- -->
 
+## The themes layer
+
+
+```r
+plt_capture_over_t <- ggplot(fish.tidy, aes(x = Year, y = Capture, color = Species)) + geom_line()
+
+plt_capture_over_t + 
+  # Remove legend entirely
+  theme(legend.position = "none")
+```
+
+![](introtoggplt2_files/figure-html/unnamed-chunk-28-1.png)<!-- -->
+
+```r
+plt_capture_over_t + 
+  # Position the legend at the bottom of the plot
+  theme(legend.position = "bottom")
+```
+
+![](introtoggplt2_files/figure-html/unnamed-chunk-28-2.png)<!-- -->
+
+```r
+plt_capture_over_t + 
+  # Position the legend inside the plot at (0.6, 0.1)
+  theme(legend.position = c(x = 0.6, y = 0.1))
+```
+
+![](introtoggplt2_files/figure-html/unnamed-chunk-28-3.png)<!-- -->
+
+## Modifying theme elements
+
+- Give all rectangles in the plot, (the rect element) a `fill` color of `"grey92"` (very pale grey).
+- Remove the `legend.key`'s outline by setting its `color` to be missing.
+Look at the changes in the plot.
+
+
+```r
+# Default plot
+plt_capture_over_t
+```
+
+![](introtoggplt2_files/figure-html/unnamed-chunk-29-1.png)<!-- -->
+
+```r
+plt_capture_over_t +
+  theme(
+    # For all rectangles, set the fill color to grey92
+    rect = element_rect(fill = "grey92"),
+    # For the legend key, turn off the outline
+    legend.key = element_rect(color = NA)
+  )
+```
+
+![](introtoggplt2_files/figure-html/unnamed-chunk-29-2.png)<!-- -->
+
+- Remove the axis ticks, `axis.ticks` by making them a blank element.
+
+- Remove the panel gridlines, `panel.grid` in the same way.
+Look at the changes in the plot.
+
+
+```r
+plt_capture_over_t +
+  theme(
+    rect = element_rect(fill = "grey92"),
+    legend.key = element_rect(color = NA),
+    # Turn off axis ticks
+    axis.ticks = element_blank(),
+    # Turn off the panel grid
+    panel.grid = element_blank()
+  )
+```
+
+![](introtoggplt2_files/figure-html/unnamed-chunk-30-1.png)<!-- -->
+
+- Add the major horizontal grid lines back to the plot using `panel.grid.major.y`.
+
+- Set the line `color` to `"white"`, `size` to `0.5`, and `linetype` to `"dotted"`.
