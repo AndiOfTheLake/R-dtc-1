@@ -364,3 +364,110 @@ ggplot(Vocab, aes(education, vocabulary)) +
   geom_jitter(alpha = 0.2, shape = 1)
 ```
 
+## Histograms
+
+```{r}
+# Plot mpg
+ggplot(mtcars, aes(mpg)) +
+  # Add a histogram layer
+  geom_histogram()
+
+ggplot(mtcars, aes(mpg)) +
+  # Set the binwidth to 1
+  geom_histogram(binwidth = 1)
+
+# Map y to ..density..
+ggplot(mtcars, aes(mpg, y = ..density..)) +
+  geom_histogram(binwidth = 1)
+
+datacamp_light_blue <- "#51A8C9"
+
+ggplot(mtcars, aes(mpg, ..density..)) +
+  # Set the fill color to datacamp_light_blue
+  geom_histogram(binwidth = 1, fill = datacamp_light_blue)
+```
+
+## Positions in histograms
+
+Here, we'll examine the various ways of applying positions to histograms. geom_histogram(), a special case of geom_bar(), has a position argument that can take on the following values:
+
+`stack` (the default): Bars for different groups are stacked on top of each other.
+
+`dodge`: Bars for different groups are placed side by side.
+
+`fill`: Bars for different groups are shown as proportions.
+
+`identity`: Plot the values as they appear in the dataset.
+
+
+```{r}
+# Update the aesthetics so the fill color is by fam
+ggplot(mtcars, aes(mpg, fill = fam)) +
+  geom_histogram(binwidth = 1)
+
+ggplot(mtcars, aes(mpg, fill = fam)) +
+  # Change the position to dodge
+  geom_histogram(binwidth = 1, position = "dodge")
+
+ggplot(mtcars, aes(mpg, fill = fam)) +
+  # Change the position to fill
+  geom_histogram(binwidth = 1, position = "fill")
+
+ggplot(mtcars, aes(mpg, fill = fam)) +
+  # Change the position to identity, with transparency 0.4
+  geom_histogram(binwidth = 1, position = "identity", alpha = 0.4)
+```
+
+## Bar plots
+
+## Position in bar and col plots
+
+```{r}
+# Plot fcyl, filled by fam
+ ggplot(mtcars, aes(fcyl, fill = fam)) +
+  # Add a bar layer
+  geom_bar()
+
+ggplot(mtcars, aes(fcyl, fill = fam)) +
+  # Set the position to "fill"
+  geom_bar(position = "fill")
+
+ggplot(mtcars, aes(fcyl, fill = fam)) +
+  # Change the position to "dodge"
+  geom_bar(position = "dodge")
+```
+
+## Overlapping bar plots
+
+```{r}
+ggplot(mtcars, aes(cyl, fill = fam)) +
+  # Change position to use the functional form, with width 0.2
+  geom_bar(position = position_dodge(width = 0.2))
+
+ggplot(mtcars, aes(cyl, fill = fam)) +
+  # Set the transparency to 0.6
+  geom_bar(position = position_dodge(width = 0.2), alpha = 0.6)
+```
+
+## Bar plots: sequential color palette
+
+```{r}
+# Plot education, filled by vocabulary
+ggplot(Vocab, aes(education, fill = vocabulary)) +
+  # Add a bar layer with position "fill"
+geom_bar(position = "fill")
+
+# Plot education, filled by vocabulary
+ggplot(Vocab, aes(education, fill = vocabulary)) +
+  # Add a bar layer with position "fill"
+  geom_bar(position = "fill") +
+  # Add a brewer fill scale with default palette
+  scale_fill_brewer(palette =  "Set1")
+```
+
+## Line plots
+
+```{r}
+
+```
+

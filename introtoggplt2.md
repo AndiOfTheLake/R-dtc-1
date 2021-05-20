@@ -1,7 +1,7 @@
 ---
 title: "Introduction to Data Visualization with ggplot2"
 author: "Andi"
-Last updated: "19 May, 2021"
+Last updated: "20 May, 2021"
 output: 
   html_document: 
     keep_md: yes
@@ -596,5 +596,252 @@ ggplot(iris, aes(Sepal.Length, Sepal.Width, color = Species)) +
 ```
 
 ![](introtoggplt2_files/figure-html/unnamed-chunk-19-1.png)<!-- -->
+
+Provide an alternative specification:
+
+Have the `position` argument call `position_jitter()` with a `width` of `0.1`.
+
+
+```r
+ggplot(iris, aes(Sepal.Length, Sepal.Width, color = Species)) +
+  # Use a jitter position function with width 0.1
+  geom_point(alpha = 0.5, position = position_jitter(width = 0.1))
+```
+
+![](introtoggplt2_files/figure-html/unnamed-chunk-20-1.png)<!-- -->
+
+## Overplotting 4: Integer data
+
+
+```r
+library(car) # to load Vocab data set
+```
+
+```
+## Loading required package: carData
+```
+
+```
+## 
+## Attaching package: 'car'
+```
+
+```
+## The following object is masked from 'package:dplyr':
+## 
+##     recode
+```
+
+```r
+# Examine the structure of Vocab
+str(Vocab)
+```
+
+```
+## 'data.frame':	30351 obs. of  4 variables:
+##  $ year      : num  1974 1974 1974 1974 1974 ...
+##  $ sex       : Factor w/ 2 levels "Female","Male": 2 2 1 1 1 2 2 2 1 1 ...
+##  $ education : num  14 16 10 10 12 16 17 10 12 11 ...
+##  $ vocabulary: num  9 9 9 5 8 8 9 5 3 5 ...
+##  - attr(*, "na.action")= 'omit' Named int [1:32115] 1 2 3 4 5 6 7 8 9 10 ...
+##   ..- attr(*, "names")= chr [1:32115] "19720001" "19720002" "19720003" "19720004" ...
+```
+
+```r
+# Plot vocabulary vs. education
+ggplot(Vocab, aes(x = education, y = vocabulary)) +
+  # Add a point layer
+ geom_point()
+```
+
+![](introtoggplt2_files/figure-html/unnamed-chunk-21-1.png)<!-- -->
+
+```r
+ggplot(Vocab, aes(education, vocabulary)) +
+  # Change to a jitter layer
+  geom_jitter()
+```
+
+![](introtoggplt2_files/figure-html/unnamed-chunk-21-2.png)<!-- -->
+
+```r
+ggplot(Vocab, aes(education, vocabulary)) +
+  # Set the transparency to 0.2
+  geom_jitter(alpha = 0.2)
+```
+
+![](introtoggplt2_files/figure-html/unnamed-chunk-21-3.png)<!-- -->
+
+```r
+ggplot(Vocab, aes(education, vocabulary)) +
+  # Set the shape to 1
+  geom_jitter(alpha = 0.2, shape = 1)
+```
+
+![](introtoggplt2_files/figure-html/unnamed-chunk-21-4.png)<!-- -->
+
+## Histograms
+
+
+```r
+# Plot mpg
+ggplot(mtcars, aes(mpg)) +
+  # Add a histogram layer
+  geom_histogram()
+```
+
+```
+## `stat_bin()` using `bins = 30`. Pick better value with `binwidth`.
+```
+
+![](introtoggplt2_files/figure-html/unnamed-chunk-22-1.png)<!-- -->
+
+```r
+ggplot(mtcars, aes(mpg)) +
+  # Set the binwidth to 1
+  geom_histogram(binwidth = 1)
+```
+
+![](introtoggplt2_files/figure-html/unnamed-chunk-22-2.png)<!-- -->
+
+```r
+# Map y to ..density..
+ggplot(mtcars, aes(mpg, y = ..density..)) +
+  geom_histogram(binwidth = 1)
+```
+
+![](introtoggplt2_files/figure-html/unnamed-chunk-22-3.png)<!-- -->
+
+```r
+datacamp_light_blue <- "#51A8C9"
+
+ggplot(mtcars, aes(mpg, ..density..)) +
+  # Set the fill color to datacamp_light_blue
+  geom_histogram(binwidth = 1, fill = datacamp_light_blue)
+```
+
+![](introtoggplt2_files/figure-html/unnamed-chunk-22-4.png)<!-- -->
+
+## Positions in histograms
+
+Here, we'll examine the various ways of applying positions to histograms. geom_histogram(), a special case of geom_bar(), has a position argument that can take on the following values:
+
+`stack` (the default): Bars for different groups are stacked on top of each other.
+
+`dodge`: Bars for different groups are placed side by side.
+
+`fill`: Bars for different groups are shown as proportions.
+
+`identity`: Plot the values as they appear in the dataset.
+
+
+
+```r
+# Update the aesthetics so the fill color is by fam
+ggplot(mtcars, aes(mpg, fill = fam)) +
+  geom_histogram(binwidth = 1)
+```
+
+![](introtoggplt2_files/figure-html/unnamed-chunk-23-1.png)<!-- -->
+
+```r
+ggplot(mtcars, aes(mpg, fill = fam)) +
+  # Change the position to dodge
+  geom_histogram(binwidth = 1, position = "dodge")
+```
+
+![](introtoggplt2_files/figure-html/unnamed-chunk-23-2.png)<!-- -->
+
+```r
+ggplot(mtcars, aes(mpg, fill = fam)) +
+  # Change the position to fill
+  geom_histogram(binwidth = 1, position = "fill")
+```
+
+```
+## Warning: Removed 16 rows containing missing values (geom_bar).
+```
+
+![](introtoggplt2_files/figure-html/unnamed-chunk-23-3.png)<!-- -->
+
+```r
+ggplot(mtcars, aes(mpg, fill = fam)) +
+  # Change the position to identity, with transparency 0.4
+  geom_histogram(binwidth = 1, position = "identity", alpha = 0.4)
+```
+
+![](introtoggplt2_files/figure-html/unnamed-chunk-23-4.png)<!-- -->
+
+## Bar plots
+
+## Position in bar and col plots
+
+
+```r
+# Plot fcyl, filled by fam
+ ggplot(mtcars, aes(fcyl, fill = fam)) +
+  # Add a bar layer
+  geom_bar()
+```
+
+![](introtoggplt2_files/figure-html/unnamed-chunk-24-1.png)<!-- -->
+
+```r
+ggplot(mtcars, aes(fcyl, fill = fam)) +
+  # Set the position to "fill"
+  geom_bar(position = "fill")
+```
+
+![](introtoggplt2_files/figure-html/unnamed-chunk-24-2.png)<!-- -->
+
+```r
+ggplot(mtcars, aes(fcyl, fill = fam)) +
+  # Change the position to "dodge"
+  geom_bar(position = "dodge")
+```
+
+![](introtoggplt2_files/figure-html/unnamed-chunk-24-3.png)<!-- -->
+
+## Overlapping bar plots
+
+
+```r
+ggplot(mtcars, aes(cyl, fill = fam)) +
+  # Change position to use the functional form, with width 0.2
+  geom_bar(position = position_dodge(width = 0.2))
+```
+
+![](introtoggplt2_files/figure-html/unnamed-chunk-25-1.png)<!-- -->
+
+```r
+ggplot(mtcars, aes(cyl, fill = fam)) +
+  # Set the transparency to 0.6
+  geom_bar(position = position_dodge(width = 0.2), alpha = 0.6)
+```
+
+![](introtoggplt2_files/figure-html/unnamed-chunk-25-2.png)<!-- -->
+
+## Bar plots: sequential color palette
+
+
+```r
+# Plot education, filled by vocabulary
+ggplot(Vocab, aes(education, fill = vocabulary)) +
+  # Add a bar layer with position "fill"
+geom_bar(position = "fill")
+```
+
+![](introtoggplt2_files/figure-html/unnamed-chunk-26-1.png)<!-- -->
+
+```r
+# Plot education, filled by vocabulary
+ggplot(Vocab, aes(education, fill = vocabulary)) +
+  # Add a bar layer with position "fill"
+  geom_bar(position = "fill") +
+  # Add a brewer fill scale with default palette
+  scale_fill_brewer(palette =  "Set1")
+```
+
+![](introtoggplt2_files/figure-html/unnamed-chunk-26-2.png)<!-- -->
 
 
