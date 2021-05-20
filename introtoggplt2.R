@@ -44,3 +44,23 @@ library(car)
 head(Vocab)
 
 load("fish.RData")
+
+load("recess.RData")
+head(recess)
+
+##
+ggplot(fish.tidy, aes(x = Year, y = Capture, color = Species)) +
+  geom_line() + 
+  # Remove legend entirely
+  theme(legend.position = "none")
+
+
+ggplot(fish.tidy, aes(x = Year, y = Capture, color = Species)) +
+  geom_line() + 
+  # Position the legend at the bottom of the plot
+  theme(legend.position = "bottom")
+
+ggplot(fish.tidy, aes(x = Year, y = Capture, color = Species)) +
+  geom_line() + 
+  # Position the legend inside the plot at (0.6, 0.1)
+  theme(legend.position = c(x = 0.6, y = 0.1))
