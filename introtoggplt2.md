@@ -844,4 +844,7 @@ ggplot(Vocab, aes(education, fill = vocabulary)) +
 
 ![](introtoggplt2_files/figure-html/unnamed-chunk-26-2.png)<!-- -->
 
+## Line plots
+
+
 

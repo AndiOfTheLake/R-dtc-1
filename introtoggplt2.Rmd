@@ -467,7 +467,27 @@ ggplot(Vocab, aes(education, fill = vocabulary)) +
 
 ## Line plots
 
-```{r}
+## Multiple time series
 
+```{r}
+load("fish.RData")
+str(fish.species)
+str(fish.tidy)
+
+# Plot the Rainbow Salmon time series
+ggplot(fish.species, aes(x = Year, y = Rainbow)) +
+  geom_line()
+
+# Plot the Pink Salmon time series
+ggplot(fish.species, aes(x = Year, y = Pink)) +
+  geom_line()
+
+# Plot multiple time-series by grouping by species
+ggplot(fish.tidy, aes(Year, Capture)) +
+  geom_line(aes(group = Species))
+
+# Plot multiple time-series by coloring by species
+ggplot(fish.tidy, aes(x = Year, y = Capture, color = Species)) +
+  geom_line()
 ```
 

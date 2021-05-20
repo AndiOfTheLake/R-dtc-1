@@ -38,6 +38,9 @@ head(mtcars)
 mtcars$fcyl <- factor(mtcars$cyl)
 
 
+
 load("diamonds.RData")
 library(car)
 head(Vocab)
+
+load("fish.RData")
