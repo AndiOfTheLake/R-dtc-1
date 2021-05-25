@@ -1,7 +1,7 @@
 ---
 title: "Introduction to Data Visualization with ggplot2"
 author: "Andi"
-Last updated: "20 May, 2021"
+Last updated: "24 May, 2021"
 output: 
   html_document: 
     keep_md: yes
@@ -9,12 +9,6 @@ output:
 
 
 
-
-```r
-# if we used both 'echo=TRUE' and 'results=hide' the pipe would not work properly
-# if we used 'echo = FALSE' and 'results=hide' we would have only messages (i.e. attaching package) If we don't want them we set 'error = FALSE', 'warning = FALSE', and 'message = FALSE'.
-library(dplyr)
-```
 
 ```
 ## 
@@ -31,11 +25,6 @@ library(dplyr)
 ## The following objects are masked from 'package:base':
 ## 
 ##     intersect, setdiff, setequal, union
-```
-
-```r
-library(ggplot2)
-library(gridExtra) # display plots side by side
 ```
 
 ```
@@ -940,6 +929,8 @@ plt_capture_over_t +
 
 ## Modifying theme elements
 
+useful link: https://ggplot2.tidyverse.org/reference/theme.html
+
 - Give all rectangles in the plot, (the rect element) a `fill` color of `"grey92"` (very pale grey).
 - Remove the `legend.key`'s outline by setting its `color` to be missing.
 Look at the changes in the plot.
@@ -967,7 +958,7 @@ plt_capture_over_t +
 - Remove the axis ticks, `axis.ticks` by making them a blank element.
 
 - Remove the panel gridlines, `panel.grid` in the same way.
-Look at the changes in the plot.
+- Look at the changes in the plot.
 
 
 ```r
@@ -987,3 +978,499 @@ plt_capture_over_t +
 - Add the major horizontal grid lines back to the plot using `panel.grid.major.y`.
 
 - Set the line `color` to `"white"`, `size` to `0.5`, and `linetype` to `"dotted"`.
+
+- Look at the changes in the plot.
+
+
+```r
+plt_capture_over_t +
+  theme(
+    rect = element_rect(fill = "grey92"),
+    legend.key = element_rect(color = NA),
+    axis.ticks = element_blank(),
+    panel.grid = element_blank(),
+    # Add major y-axis panel grid lines back
+      panel.grid.major.y = element_line(
+      # Set the color to white
+      color = "white",
+      # Set the size to 0.5
+      size = 0.5,
+      # Set the line type to dotted
+      linetype = "dotted"
+    )
+  )
+```
+
+![](introtoggplt2_files/figure-html/unnamed-chunk-31-1.png)<!-- -->
+
+- Make the axis tick labels' text, `axis.text`, less prominent by changing the `color` to `"grey25"`.
+
+- Increase the `plot.title`'s, `size` to `16` and change its font `face` to `"italic"`.
+
+- Look at the changes in the plot.
+
+
+```r
+plt_capture_over_t +
+  theme(
+    rect = element_rect(fill = "grey92"),
+    legend.key = element_rect(color = NA),
+    axis.ticks = element_blank(),
+    panel.grid = element_blank(),
+    panel.grid.major.y = element_line(
+      color = "white",
+      size = 0.5,
+      linetype = "dotted"
+    ),
+    # Set the axis text color to grey25
+    axis.text = element_text(color = "grey25"),
+    # Set the plot title font face to italic and font size to 16
+    plot.title = element_text(face = "italic", size = 16)
+  )
+```
+
+![](introtoggplt2_files/figure-html/unnamed-chunk-32-1.png)<!-- -->
+
+## Modifying whitespace
+
+**Whitespace**: all the non-visible margins and spacing in the plot.
+
+
+```r
+# make a plot
+plt_mpg_vs_wt_by_cyl <- ggplot(mtcars, aes(x = wt, y = mpg, color = fcyl)) + 
+  geom_point() + 
+  labs(
+    x = "Weight (1000 lbs)",
+    y = "Miles per gallon",
+    colour = "factor(cyl)"
+    )
+```
+
+- Give the axis tick length, `axis.ticks.length`, a unit of `2` `"lines"`.
+
+
+```r
+# View the original plot
+plt_mpg_vs_wt_by_cyl
+```
+
+![](introtoggplt2_files/figure-html/unnamed-chunk-34-1.png)<!-- -->
+
+```r
+plt_mpg_vs_wt_by_cyl +
+  theme(
+    # Set the axis tick length to 2 lines
+    axis.ticks.length = unit(2, "lines")
+  )
+```
+
+![](introtoggplt2_files/figure-html/unnamed-chunk-34-2.png)<!-- -->
+
+- Give the legend key size, `legend.key.size`, a unit of `3` centimeters (`"cm"`).
+
+
+```r
+plt_mpg_vs_wt_by_cyl +
+  theme(
+    # Set the legend key size to 3 centimeters
+    legend.key.size = unit(3, "cm")
+  )
+```
+
+![](introtoggplt2_files/figure-html/unnamed-chunk-35-1.png)<!-- -->
+
+- Set the `legend.margin` to `20` points (`"pt"`) on the top, `30` pts on the griht, `40` pts on the bottom, and `50` pts on the left.
+
+
+```r
+plt_mpg_vs_wt_by_cyl +
+  theme(
+    # Set the legend margin to (20, 30, 40, 50) points
+    legend.margin = margin(20, 30, 40, 50, "pt")
+  )
+```
+
+![](introtoggplt2_files/figure-html/unnamed-chunk-36-1.png)<!-- -->
+
+- Set the plot margin, plot.margin, to 10, 30, 50, and 70 millimeters ("mm").
+
+
+```r
+plt_mpg_vs_wt_by_cyl +
+  theme(
+    # Set the plot margin to (10, 30, 50, 70) millimeters
+    plot.margin = margin(10, 30, 50, 70, "mm")
+  )
+```
+
+![](introtoggplt2_files/figure-html/unnamed-chunk-37-1.png)<!-- -->
+
+## Theme flexibility
+
+## Built-in themes
+
+
+```r
+# Add a black and white theme
+plt_capture_over_t +
+  theme_bw()
+```
+
+![](introtoggplt2_files/figure-html/unnamed-chunk-38-1.png)<!-- -->
+
+```r
+# Add a classic theme
+plt_capture_over_t +
+  theme_classic()
+```
+
+![](introtoggplt2_files/figure-html/unnamed-chunk-38-2.png)<!-- -->
+
+```r
+# Add a void theme
+plt_capture_over_t +
+  theme_void()
+```
+
+![](introtoggplt2_files/figure-html/unnamed-chunk-38-3.png)<!-- -->
+
+## Exploring ggthemes
+
+
+```r
+library(ggthemes)
+```
+
+
+```r
+# Use the fivethirtyeight theme
+plt_capture_over_t +
+  theme_fivethirtyeight()
+```
+
+![](introtoggplt2_files/figure-html/unnamed-chunk-40-1.png)<!-- -->
+
+```r
+# Use Tufte's theme
+plt_capture_over_t +
+  theme_tufte()
+```
+
+![](introtoggplt2_files/figure-html/unnamed-chunk-40-2.png)<!-- -->
+
+```r
+# Use the Wall Street Journal theme
+plt_capture_over_t +
+  theme_wsj()
+```
+
+![](introtoggplt2_files/figure-html/unnamed-chunk-40-3.png)<!-- -->
+
+## Setting themes
+
+
+```r
+# Save the theme as theme_recession
+theme_recession <- theme(
+  rect = element_rect(fill = "grey92"),
+  legend.key = element_rect(color = NA),
+  axis.ticks = element_blank(),
+  panel.grid = element_blank(),
+  panel.grid.major.y = element_line(color = "white", size = 0.5, linetype = "dotted"),
+  axis.text = element_text(color = "grey25"),
+  plot.title = element_text(face = "italic", size = 16),
+  legend.position = c(0.6, 0.1)
+)
+
+# Combine the Tufte theme with theme_recession
+# Note that "theme_recession" and "theme_tufte_recession" are NOT functions; we don't need parentheses to use them
+theme_tufte_recession <- theme_tufte() + theme_recession
+
+# Add the Tufte recession theme to the plot
+plt_capture_over_t + theme_tufte_recession
+```
+
+![](introtoggplt2_files/figure-html/unnamed-chunk-41-1.png)<!-- -->
+
+```r
+theme_recession <- theme(
+  rect = element_rect(fill = "grey92"),
+  legend.key = element_rect(color = NA),
+  axis.ticks = element_blank(),
+  panel.grid = element_blank(),
+  panel.grid.major.y = element_line(color = "white", size = 0.5, linetype = "dotted"),
+  axis.text = element_text(color = "grey25"),
+  plot.title = element_text(face = "italic", size = 16),
+  legend.position = c(0.6, 0.1)
+)
+theme_tufte_recession <- theme_tufte() + theme_recession
+
+# Set theme_tufte_recession as the default theme
+theme_set(theme_tufte_recession)
+
+# Draw the plot (without explicitly adding a theme)
+plt_capture_over_t
+```
+
+![](introtoggplt2_files/figure-html/unnamed-chunk-41-2.png)<!-- -->
+
+## Publication-quality plots
+
+
+```r
+plt_capture_over_t +
+  # Add Tufte's theme
+  theme_tufte()
+```
+
+![](introtoggplt2_files/figure-html/unnamed-chunk-42-1.png)<!-- -->
+
+```r
+plt_capture_over_t +
+  theme_tufte() +
+  # Add individual theme elements
+  theme(
+    # Turn off the legend
+    legend.position = "none",
+    # Turn off the axis ticks
+    axis.ticks = element_blank()
+  )
+```
+
+![](introtoggplt2_files/figure-html/unnamed-chunk-42-2.png)<!-- -->
+
+```r
+plt_capture_over_t +
+  theme_tufte() +
+  theme(
+    legend.position = "none",
+    axis.ticks = element_blank(),
+    # Set the axis title's text color to grey60
+    axis.title = element_text(color = "grey60"),
+    # Set the axis text's text color to grey60
+    axis.text = element_text(color = "grey60")
+  )
+```
+
+![](introtoggplt2_files/figure-html/unnamed-chunk-42-3.png)<!-- -->
+
+```r
+plt_capture_over_t +
+  theme_tufte() +
+  theme(
+    legend.position = "none",
+    axis.ticks = element_blank(),
+    axis.title = element_text(color = "grey60"),
+    axis.text = element_text(color = "grey60"),
+    # Set the panel gridlines major y values
+    panel.grid.major.y = element_line(
+      # Set the color to grey60
+      color = "grey60",
+      # Set the size to 0.25
+      size = 0.25,
+      # Set the linetype to dotted
+      linetype = "dotted"
+    )
+  )
+```
+
+![](introtoggplt2_files/figure-html/unnamed-chunk-42-4.png)<!-- -->
+
+## Effective explanatory plots
+
+## Using geoms for explanatory plots
+
+
+
+
+```r
+gm2007<-gapminder %>% filter(year == "2007")
+```
+
+- `geom_segment()` adds line segments and requires two additional aesthetics: `xend` and `yend`. To draw a horizontal line for each point, map `30` onto `xend` and `country` onto `yend`.
+
+
+```r
+# Add a geom_segment() layer
+ggplot(gm2007, aes(x = lifeExp, y = country, color = lifeExp)) +
+  geom_point(size = 4) +
+  geom_segment(aes(xend = 30, yend = country), size = 2)
+```
+
+![](introtoggplt2_files/figure-html/unnamed-chunk-45-1.png)<!-- -->
+
+- `geom_text` also needs an additional aesthetic: `label`. Map `lifeExp` onto `label`, and set the attributes `color` to `"white"` and `size` to `1.5`.
+
+
+```r
+# Add a geom_text() layer
+ggplot(gm2007, aes(x = lifeExp, y = country, color = lifeExp)) +
+  geom_point(size = 4) +
+  geom_segment(aes(xend = 30, yend = country), size = 2) +
+  geom_text(aes(label = lifeExp), color = "white", size = 1.5)
+```
+
+![](introtoggplt2_files/figure-html/unnamed-chunk-46-1.png)<!-- -->
+
+
+The color scale has been set for you, but you need to clean up the scales. For the x scale:
+
+- Set `expand` to `c(0, 0)` and `limits` to `c(30, 90)`.
+- Place the axis on the top of the plot with the `position` argument.
+
+
+```r
+library(RColorBrewer)
+# Set the color scale (need RColorBrewer package)
+palette <- brewer.pal(5, "RdYlBu")[-(2:4)]
+
+# Modify the scales
+ggplot(gm2007, aes(x = lifeExp, y = country, color = lifeExp)) +
+  geom_point(size = 4) +
+  geom_segment(aes(xend = 30, yend = country), size = 2) +
+  geom_text(aes(label = round(lifeExp,1)), color = "white", size = 1.5) +
+  scale_x_continuous("", expand = c(0, 0), limits = c(30, 90), position = "top") +
+  scale_color_gradientn(colors = palette)
+```
+
+![](introtoggplt2_files/figure-html/unnamed-chunk-47-1.png)<!-- -->
+
+Make sure to label the plot appropriately using `labs()`:
+
+- Make the title `"Highest and lowest life expectancies, 2007"`.
+- Add a reference by setting `caption` to `"Source: gapminder"`.
+
+
+```r
+# Set the color scale
+palette <- brewer.pal(5, "RdYlBu")[-(2:4)]
+
+# base plot
+plt_country_vs_lifeExp<-ggplot(gm2007, aes(x = lifeExp, y = country, color = lifeExp)) +
+  geom_point(size = 4)
+
+# Add a title and caption
+plt_country_vs_lifeExp +
+  geom_segment(aes(xend = 30, yend = country), size = 2) +
+  geom_text(aes(label = round(lifeExp,1)), color = "white", size = 1.5) +
+  scale_x_continuous("", expand = c(0,0), limits = c(30,90), position = "top") +
+  scale_color_gradientn(colors = palette) +
+  labs(title = "Highest and lowest life expectancies, 2007", caption = "Source: gapminder")
+```
+
+![](introtoggplt2_files/figure-html/unnamed-chunk-48-1.png)<!-- -->
+
+## Using annotate() for embellishments
+
+The following values have been calculated for you to assist with adding embellishments to the plot:
+
+
+```r
+global_mean <- mean(gm2007$lifeExp)
+x_start <- global_mean + 4
+y_start <- 5.5
+x_end <- global_mean
+y_end <- 7.5
+```
+
+
+Clean up the theme:
+
+- Add a classic theme to the plot with theme_classic().
+- Set axis.line.y, axis.ticks.y, and axis.title to element_blank().
+- Set the axis.text color to "black".
+- Remove the legend by setting legend.position to "none".
+
+
+```r
+# Define the theme
+plt_country_vs_lifeExp +
+  theme_classic() +
+  theme(axis.line.y = element_blank(),
+        axis.ticks.y = element_blank(),
+        axis.text = element_text(color = "black"),
+        axis.title = element_blank(),
+        legend.position = "none")
+```
+
+![](introtoggplt2_files/figure-html/unnamed-chunk-50-1.png)<!-- -->
+
+Use geom_vline() to add a vertical line. Set xintercept to global_mean, specify the color to be "grey40", and set linetype to 3.
+
+
+```r
+# theme from previous step
+step_1_themes<-theme_classic() +
+  theme(axis.line.y = element_blank(),
+        axis.ticks.y = element_blank(),
+        axis.text = element_text(color = "black"),
+        axis.title = element_blank(),
+        legend.position = "none")
+
+# Add a vertical line
+plt_country_vs_lifeExp +
+  step_1_themes +
+  geom_vline(xintercept = global_mean, color = "grey40", linetype = 3)
+```
+
+![](introtoggplt2_files/figure-html/unnamed-chunk-51-1.png)<!-- -->
+
+x_start and y_start will be used as positions to place text and have been calculated for you.
+
+- Add a "text" geom as an annotation.
+- For the annotation, set x to x_start, y to y_start, and label to `"The\nglobal\naverage"`.
+
+
+```r
+# Add text
+plt_country_vs_lifeExp +
+  step_1_themes +
+  geom_vline(xintercept = global_mean, color = "grey40", linetype = 3) +
+  annotate(
+    geom = "text",
+      x = x_start, 
+      y = y_start,
+      label = "The\nglobal\naverage",
+      vjust = 1, 
+      size = 3, 
+      color = "grey40"
+  )
+```
+
+![](introtoggplt2_files/figure-html/unnamed-chunk-52-1.png)<!-- -->
+
+Annotate the plot with an arrow connecting your text to the line.
+
+- Use a "curve" geom.
+- Set the arrow ends xend to x_end and yend to y_end.
+- Set the length of the arrowhead to 0.2 cm and the type to "closed".
+
+
+```r
+step_3_annotation<-annotate(
+    geom = "text",
+      x = x_start, 
+      y = y_start,
+      label = "The\nglobal\naverage",
+      vjust = 1, 
+      size = 3, 
+      color = "grey40"
+  )
+
+# Add a curve
+plt_country_vs_lifeExp +  
+  step_1_themes +
+  geom_vline(xintercept = global_mean, color = "grey40", linetype = 3) +
+  step_3_annotation +
+  annotate(
+    geom = "curve",
+    x = x_start, y = y_start,
+    xend = x_end, yend = y_end,
+    arrow = arrow(length = unit(0.2, "cm"), type = "closed"),
+    color = "grey40"
+  )
+```
+
+![](introtoggplt2_files/figure-html/unnamed-chunk-53-1.png)<!-- -->
+
