@@ -64,3 +64,15 @@ ggplot(fish.tidy, aes(x = Year, y = Capture, color = Species)) +
   geom_line() + 
   # Position the legend inside the plot at (0.6, 0.1)
   theme(legend.position = c(x = 0.6, y = 0.1))
+
+plt_mpg_vs_wt_by_cyl <- ggplot(mtcars, aes(x = wt, y = mpg, color = fcyl)) + 
+  geom_point() + 
+  labs(
+    x = "Weight (1000 lbs)",
+    y = "Miles per gallon",
+    colour = "factor(cyl)"
+    )
+
+library(gapminder)
+gm2007<-gapminder %>% filter(year == "2007")
+head(gm2007)
